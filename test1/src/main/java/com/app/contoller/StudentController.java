@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,14 +16,25 @@ import com.app.service.StudentService;
 @RestController
 @RequestMapping("/students")
 public class StudentController {
+	
+	
 	@Autowired
 	private StudentService stud;
+	
+	
 	@GetMapping("/")
 	public List<Student> getStudents(){
 		List<Student> slist=stud.studentsList();
 		return slist;
-		
 	}
+	
+	@PostMapping("/add")
+	public String insertStudent(@RequestBody Student s) {
+		String str=stud.addStudent(s);
+		return str;
+	}
+	
+	
 	
 	@GetMapping("/register")
 	public String registerStudent(@RequestParam String sname,@RequestParam String average ) {
@@ -29,7 +42,8 @@ public class StudentController {
 			String str = stud.addStudent(s);
 		
 		return str;
-		
 	}
+	
+	
 
 }
